@@ -2,13 +2,22 @@ package com.tonoy.payroll.employee;
 
 import java.util.Objects;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table
 public class Employee {
-    private @Id @GeneratedValue Long id;
+    @Id
+    @SequenceGenerator(
+            name = "employee_sequence",
+            sequenceName = "employee_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "employee_sequence"
+    )
+    private Long id;
 
     public void setId(Long id) {
         this.id = id;
@@ -38,22 +47,20 @@ public class Employee {
         this.role = role;
     }
 
-    Employee() {
+    public Employee() {
     }
 
-    Employee(String name, String role) {
+    public Employee(String name, String role) {
         this.name = name;
         this.role = role;
     }
 
     @Override
     public boolean equals(Object o) {
-
         if (this == o)
             return true;
-        if (!(o instanceof Employee))
+        if (!(o instanceof Employee employee))
             return false;
-        Employee employee = (Employee) o;
         return Objects.equals(this.id, employee.id) && Objects.equals(this.name, employee.name)
                 && Objects.equals(this.role, employee.role);
     }

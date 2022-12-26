@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1/employees")
 public class EmployeeController {
     private final EmployeeRepository employeeRepository;
 
@@ -21,19 +21,19 @@ public class EmployeeController {
     }
 
     // get all the employee
-    @GetMapping("/employees")
+    @GetMapping
     public List<Employee> getEmployees() {
         return employeeRepository.findAll();
     }
 
     // create a new employee
-    @PostMapping("/employees")
+    @PostMapping
     public Employee createEmployee(@RequestBody Employee newEmployee) {
         return employeeRepository.save(newEmployee);
     }
 
     // get single employee by ID
-    @GetMapping("/employees/{id}")
+    @GetMapping("/{id}")
     public Employee getEmployee(@PathVariable Long id) {
         return employeeRepository
                 .findById(id)
@@ -41,7 +41,7 @@ public class EmployeeController {
     }
 
     // update employee
-    @PutMapping("/employees/{id}")
+    @PutMapping("/{id}")
     public Employee updateEmployee(@RequestBody Employee updatedEmployee, @PathVariable Long id) {
         return employeeRepository
                 .findById(id)
@@ -57,7 +57,7 @@ public class EmployeeController {
     }
 
     // delete employee
-    @DeleteMapping("/employees/{id}")
+    @DeleteMapping("/{id}")
     public void deleteEmployee(@PathVariable Long id) {
         try {
             employeeRepository.deleteById(id);
